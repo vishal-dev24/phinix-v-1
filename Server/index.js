@@ -4,7 +4,7 @@ const userModel = require('./models/users');
 const postModel = require('./models/posts');
 const boardModel = require('./models/boards');
 const upload = require('./models/multer');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const path = require('path');
@@ -15,8 +15,7 @@ app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-const SECRET = "shhhh"; // Secret key for JWT
-
+const SECRET = 'shhhhh';
 // 🟢 Register Route
 app.post('/register', upload.single('image'), async (req, res) => {
     const { username, email, password } = req.body;
