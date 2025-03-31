@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const userModel = require('./models/users');
@@ -42,13 +41,21 @@ app.post('/login', async (req, res) => {
     bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
             const token = jwt.sign({ email, userId: user._id }, SECRET);
-            res.cookie("token", token, { httpOnly: true });
+
+            // ✅ Secure Cookies Set karo
+            res.cookie("token", token, {
+                httpOnly: true,
+                sameSite: "None",
+                secure: true
+            });
+
             res.json({ success: true, message: "Login successful", user });
         } else {
             res.status(400).json({ success: false, message: "Invalid email or password" });
         }
     });
 });
+
 // 🟢 Middleware to Check Login
 function isLoggedIn(req, res, next) {
     const token = req.cookies.token;
