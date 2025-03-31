@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const userModel = require('./models/users');
